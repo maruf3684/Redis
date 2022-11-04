@@ -1,0 +1,17 @@
+const redis = require('redis');
+const express = require('express')
+const app = express()
+const port = 4590
+
+const client = redis.createClient(6379, '127.0.0.1');
+
+client.on('connect', function () {
+    console.log('redis connected');
+}).on('error', function (error) {
+    console.log(error);
+});
+
+app.listen(port, async () => {
+    await client.connect();
+    console.log(`Example app listening on port ${port}`)
+})
